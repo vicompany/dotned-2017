@@ -1,0 +1,13 @@
+html {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+
+	font-family: $font-face-display;
+	font-size: $font-size-base;
+	font-weight: $font-weight-light;
+	line-height: $font-line-height-base;
+}

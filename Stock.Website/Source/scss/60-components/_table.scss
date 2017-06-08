@@ -1,0 +1,31 @@
+.table {
+	width: 100%;
+
+	font-size: $font-size-xs;
+	border-collapse: collapse;
+
+	&:not(last-of-type) {
+		margin-bottom: $distance-m;
+	}
+
+	&--zebra {
+		tr:nth-child(even) {
+			background: $color-gray-lighter;
+		}
+	}
+}
+
+
+.table__head,
+.table__cell {
+	padding: $distance-s / 2;
+}
+
+.table__head {
+	text-align: left;
+
+	.table--horizontal & {
+		width: 30%;
+		padding-left: $distance-s;
+	}
+}

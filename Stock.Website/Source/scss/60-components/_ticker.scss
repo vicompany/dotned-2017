@@ -1,0 +1,76 @@
+.ticker {
+	position: relative;
+	height: 100%;
+
+	padding: $distance-s;
+	border: 1px solid $color-gray;
+}
+
+.ticker__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	margin: -$distance-s;
+	margin-bottom: $distance-s;
+	padding: #{$distance-s / 2} $distance-m;
+
+	color: $color-white;
+	background-color: $color-secondary-lighter;
+}
+
+.ticker__title {
+	margin-bottom: 0;
+}
+
+.ticker__mid {
+	position: relative;
+	font-size: $font-size-m;
+	font-weight: $font-weight-bold;
+
+	border-bottom: 1px solid $color-gray;
+
+	&:before {
+		content: '';
+		position: absolute;
+		z-index: -1;
+
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+
+	}
+
+	&.is-positive-tick,
+	&.is-negative-tick {
+		&:before {
+			animation: flash 0.5s $anim-ease-in forwards;
+		}
+	}
+
+	&.is-positive-tick {
+		&:before {
+			background-color: $color-positive;
+		}
+	}
+
+	&.is-negative-tick {
+		&:before {
+			background-color: $color-negative;
+		}
+	}
+}
+
+.ticker__quote {
+	height: 100%;
+	text-align: center;
+}
+
+.ticker__quote-title {
+	margin-top: $distance-s;
+}
+
+.ticker__quote-value {
+	font-weight: $font-weight-bold;
+}

@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
+// font families
+$font-face-display: 'Lato', sans-serif;
+
+$font-weight-light:				300;
+$font-weight-regular:			400;
+$font-weight-bold:				700;
+
+// sizes
+$font-size-px:					$base-size; // in pixels
+$font-line-height-px:			28; // in pixels
+
+$font-size-base:				($font-size-px / 16) * 1rem; // convert px to rem
+$font-line-height-base:			$font-line-height-px / $font-size-px; // calculate the line height in rem
+
+// font sizes
+$font-size-xs:					#{$font-size-base * 0.8};
+$font-size-s:					#{$font-size-base * 1};
+$font-size-m:					#{$font-size-base * 1.2};
+$font-size-l:					#{$font-size-base * 1.5};
+$font-size-xl:					#{$font-size-base * 2};
+
+$font-line-height-s:			1.125;
+$font-line-height-m:			1.25;
+$font-line-height-l:			$font-line-height-base;
+

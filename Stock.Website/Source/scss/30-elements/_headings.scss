@@ -1,0 +1,16 @@
+h1,
+h2,
+h3,
+h4 {
+	margin-top: 0;
+}
+
+h1 {
+	margin-bottom: $distance-l;
+	font-size: $font-size-xl;
+}
+
+h2 {
+	margin-bottom: $distance-m;
+	font-size: $font-size-l;
+}
