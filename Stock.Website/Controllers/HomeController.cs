@@ -11,11 +11,26 @@ namespace Stock.Website.Controllers
 { 
     public class HomeController : Controller
     {
-        [HttpGet, Route("")]
-        public async Task<IActionResult> Index()
+        [HttpGet, Route("init")]
+        public async Task<IActionResult> Init()
         {
-           
-            return View("demo");
+             var a = GrainClient.GrainFactory.GetGrain<IFund>("Shell");
+             await a.SetOffset(23); 
+             a = GrainClient.GrainFactory.GetGrain<IFund>("Delta Loyd");
+             await a.SetOffset(123);
+             a =  GrainClient.GrainFactory.GetGrain<IFund>("Google");
+             await a.SetOffset(453);
+             a = GrainClient.GrainFactory.GetGrain<IFund>("VI Company");
+             await a.SetOffset(42);
+
+            return RedirectToAction("Demo");
+        }
+        [HttpGet, Route("demo")]
+        public async Task<IActionResult> Demo()
+        {
+           var reporter = GrainClient.GrainFactory.GetGrain<IFundReporter>(0);
+           var items = await reporter.GetReport();
+           return View("demo", new FundReportModel(){ Report = items });
         }
 
         [HttpGet, Route("index/{fund}")]
@@ -29,21 +44,5 @@ namespace Stock.Website.Controllers
             return View("index");
         }
 
-        [HttpPost, Route("index/{fund}")]
-        public async Task<IActionResult> Post(string fund, FundModel change)
-        {
-            var fundShell = GrainClient.GrainFactory.GetGrain<IFund>(fund);
-            if (change.Ask > 0)
-            {
-                await fundShell.LayOrder(change.Ask, false);
-            } 
-            else
-            {
-                await fundShell.LayOrder(change.Bid, true);
-            }
-
-            ViewBag.Message = "Order processed";
-            return await Index(fund);
-        }
     }
 }

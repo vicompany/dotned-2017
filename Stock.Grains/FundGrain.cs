@@ -10,6 +10,7 @@ namespace Stock.Grains
 {
     public class FundGrain : Orleans.Grain, IFund
     {
+        private decimal offset = 1;
         private readonly CultureInfo us = new CultureInfo("en-US");
 
         private ObserverSubscriptionManager<IFundObserver> subscribers =
@@ -23,9 +24,9 @@ namespace Stock.Grains
             var rand = new Random(System.Environment.TickCount);
             this.timer = this.RegisterTimer((item) =>
                 {
-                    var ask = 1 + rand.Next(0, 1000) / 10000.0m;
+                    var ask = offset + rand.Next(0, 1000) / 10000.0m;
                     this.latestAsk.Add(ask);
-                    var bid = 1 + rand.Next(0, 1000) / 10000.0m;
+                    var bid = offset + rand.Next(0, 1000) / 10000.0m;
                     this.latestBid.Add(bid);
 
                     this.subscribers.Notify(s => s.SendMessage($@"{{fund: ""{this.GetPrimaryKeyString()}"", ask: {ask.ToString(this.us)}, bid: {ask.ToString(this.us)}}}"));
@@ -33,44 +34,29 @@ namespace Stock.Grains
 
                     return Task.CompletedTask;
                 }, this, TimeSpan.FromSeconds(0), TimeSpan.FromMilliseconds(500));
+
+            var reporter = this.GrainFactory.GetGrain<IFundReporter>(0);
+            await  reporter.ReportAboutFund(this.GetPrimaryKeyString());
             await base.OnActivateAsync();
         }
 
-        public Task<decimal> GetLatestAsk()
+        public Task<List<decimal>> GetLatestAsk()
         {
-            if (latestAsk.Count != 0)
-            {
-                return Task.FromResult(latestAsk[latestAsk.Count - 1]);
-            }
-            else
-            {
-                return Task.FromResult(0m);
-            }
+            //System.Threading.Thread.Sleep(1000);
+            return Task.FromResult(latestAsk);
         }
 
-        public Task<decimal> GetLatestBid()
+        public Task<List<decimal>> GetLatestBid()
         {
-            if (latestBid.Count != 0)
-            {
-                return Task.FromResult(latestBid[latestBid.Count - 1]);
-            }
-            else
-            {
-                return Task.FromResult(0m);
-            }
+         
+            //System.Threading.Thread.Sleep(1000);
+            return Task.FromResult(latestBid);
         }
 
-        public Task<bool> LayOrder(decimal price, bool bid)
-        {
-            if (bid)
-            {
-                this.latestBid.Add(price);
-            }
-            else
-            {
-                this.latestAsk.Add(price);
-            }
-            return Task.FromResult(true);
+        public Task SetOffset(decimal offset)
+        { 
+            this.offset = offset;
+            return Task.CompletedTask;
         }
 
         public async Task SetListener(IFundObserver listenerFundObserver)

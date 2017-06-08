@@ -1,4 +1,4 @@
-﻿@model Stock.Website.Models.FundModel
+﻿@model Stock.Website.Models.FundReportModel
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -15,12 +15,25 @@
 </select>
 
 <h2>Fund history</h2>
-
+Please init the funds by clicking <a asp-action="Init" >Here</a>
 <table>
+    <thead>
+        <tr>
+            <td>Fund</td>
+            <td>Amount of bids</td>
+            <td>Average ask</td>
+            <td>Average bid</td>
+        </tr>
+    </thead>
     <tbody>
-    <tr>Heineken</tr>
-
-    <tr>hoogste</tr>
-        <
+        @foreach(var fund in Model.Report)
+        {
+            <tr>
+                <td>@fund.Name</td>
+                <td>@fund.AmountOfPrices</td>
+                <td>@fund.AverageBid.ToString("0.00000")</td>
+                <td>@fund.AverageAsk.ToString("0.00000")</td>
+            </tr>
+        } 
     </tbody>
 </table>

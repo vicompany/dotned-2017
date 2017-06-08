@@ -45,5 +45,10 @@ namespace Stock.Website.Models
                     CancellationToken.None);
             }
         }
+
+        internal void RemoveSocket(WebSocket socket)
+        {
+            this.WebSockets.Remove(socket);
+        }
     }
 }

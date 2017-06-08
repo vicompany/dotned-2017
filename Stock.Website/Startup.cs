@@ -90,25 +90,27 @@ namespace Stock.Website
         {
             string ok = "OK";
             var buffer = new byte[1024 * 4];
-            WebSocketReceiveResult result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-         
-            var grain = GrainClient.GrainFactory.GetGrain<IFund>(Encoding.UTF8.GetString(buffer, 0, result.Count));
-            try
-            {
-                socketHandler.AddSocket(webSocket);
-                await grain.SetListener(socketHandler.ObserverRef);
-                  
-            }
-            catch (Exception exc)
-            {
-                Console.WriteLine(exc);
-                throw;
-            }
-            while (!result.CloseStatus.HasValue)
-            {
-            }
 
-            await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+            while (!webSocket.CloseStatus.HasValue)
+            {
+                WebSocketReceiveResult result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+         
+                var grain = GrainClient.GrainFactory.GetGrain<IFund>(Encoding.UTF8.GetString(buffer, 0, result.Count));
+                try
+                {
+                    socketHandler.AddSocket(webSocket);
+                    await grain.SetListener(socketHandler.ObserverRef);
+                    
+                }
+                catch (Exception exc)
+                {
+                    Console.WriteLine(exc);
+                    throw;
+                }
+            }
+            socketHandler.RemoveSocket(webSocket);
+            
+            await webSocket.CloseAsync(webSocket.CloseStatus.Value, "End", CancellationToken.None);
         }
     }
 }
