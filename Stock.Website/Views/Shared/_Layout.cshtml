@@ -2,33 +2,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Stock.Website</title>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@ViewData["Title"] - Demo</title>
 
     <environment names="Development">
-        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/dist/css/main.css" />
     </environment>
 
     <environment names="Staging,Production">
-        <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/dist/css/main.css" asp-append-version="true" />
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Dot.Ned demo vi-company</a>
-            </div>
-         
-        </div>
-    </nav>
+    @Html.Partial("Partials/_Header")
+
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -37,6 +26,7 @@
         </footer>
     </div>
 
-    <script src="~/js/main.js" asp-append-version="true"></script>
+    <script src="https://unpkg.com/vue@2.3.3/dist/vue.js"></script>
+    <script src="~/dist/js/main.js" asp-append-version="true"></script>
 </body>
 </html>

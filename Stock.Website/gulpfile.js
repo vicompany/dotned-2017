@@ -30,7 +30,7 @@ const config = {
 
 const paths = {
 	src: './source',
-	dist: './dist',
+	dist: './wwwroot/dist',
 };
 
 const copyFiles = [
