@@ -7,3 +7,11 @@
 	padding-right: $gutter;
 	padding-left: $gutter;
 }
+
+
+.section {
+	padding-bottom: $distance-m;
+	margin-bottom: $distance-m;
+
+	border-bottom: 1px solid $color-black;
+}

@@ -1,5 +1,3 @@
-import chart from './chart';
-
 const states = {
 	pending: 'pending',
 	loading: 'loading',
@@ -26,7 +24,7 @@ const definition = {
 	name: 'ticker',
 
 	components: {
-		chart,
+		//
 	},
 
 	props: {

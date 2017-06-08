@@ -1,5 +1,4 @@
 /* globals Vue: false, */
-
 import tickerOverview from './components/ticker-overview';
 
 
