@@ -94,18 +94,22 @@ namespace Stock.Website
             while (!webSocket.CloseStatus.HasValue)
             {
                 WebSocketReceiveResult result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-         
-                var grain = GrainClient.GrainFactory.GetGrain<IFund>(Encoding.UTF8.GetString(buffer, 0, result.Count));
-                try
+                var fundName = Encoding.UTF8.GetString(buffer, 0, result.Count);
+                if (!string.IsNullOrEmpty(fundName))
                 {
-                    socketHandler.AddSocket(webSocket);
-                    await grain.SetListener(socketHandler.ObserverRef);
-                    
-                }
-                catch (Exception exc)
-                {
-                    Console.WriteLine(exc);
-                    throw;
+                    var grain = GrainClient.GrainFactory.GetGrain<IFund>(fundName);
+                    try
+                    {
+                        socketHandler.AddSocket(webSocket);
+
+                        await grain.SetListener(socketHandler.ObserverRef);
+                        
+                    }
+                    catch (Exception exc)
+                    {
+                        Console.WriteLine(exc);
+                        throw;
+                    }
                 }
             }
             socketHandler.RemoveSocket(webSocket);

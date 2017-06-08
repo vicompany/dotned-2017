@@ -61,6 +61,14 @@ namespace Stock.Grains
 
         public async Task SetListener(IFundObserver listenerFundObserver)
         {
+            try
+            {
+                this.subscribers.Unsubscribe(listenerFundObserver);
+            }
+            catch(Exception)
+            {
+                
+            }
             this.subscribers.Subscribe(listenerFundObserver);
         }
     }
