@@ -29,7 +29,7 @@ namespace Stock.Grains
                     var bid = offset + rand.Next(0, 1000) / 10000.0m;
                     this.latestBid.Add(bid);
 
-                    this.subscribers.Notify(s => s.SendMessage($@"{{fund: ""{this.GetPrimaryKeyString()}"", ask: {ask.ToString(this.us)}, bid: {ask.ToString(this.us)}}}"));
+                    this.subscribers.Notify(s => s.SendMessage($@"{{""fund"": {this.GetPrimaryKeyString()}, ""ask"": {ask.ToString(this.us)}, ""bid"": {bid.ToString(this.us)}}}"));
 
 
                     return Task.CompletedTask;
