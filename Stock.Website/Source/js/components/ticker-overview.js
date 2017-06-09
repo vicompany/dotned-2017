@@ -1,8 +1,6 @@
 import socketConnection from '../utils/socket';
 import ticker from './ticker';
 
-socketConnection.send('heineken');
-
 const definition = {
 	name: 'ticker-overview',
 
@@ -14,9 +12,10 @@ const definition = {
 		return {
 			refreshInterval: 2000, // MS
 			selectedSymbol: null,
-			symbols: 'AAL, AAPL, ADBE, ADI, ADP, ADSK, AKAM, ALXN, AMAT, AMGN, AMZN, ATVI, AVGO, BIDU, BIIB, BMRN, CA, CELG, CERN, CHKP, CHTR, CTRP, CTAS, CSCO, CTXS, CMCSA, COST, CSX, CTSH, DISCA, DISCK, DISH, DLTR, EA, EBAY, ESRX, EXPE, FAST, FB, FISV, FOX, FOXA, GILD, GOOG, HAS, HSIC, HOLX, ILMN, INCY, INTC, INTU, ISRG, JD, KLAC, KHC, LBTYA, LILA, LILAK, LRCX, QVCA, LVNTA, MAR, MCHP, MDLZ, MNST, MSFT, MU, MXIM, MYL, NCLH, NFLX, NVDA, ORLY, PAYX, PCAR, PCLN, QCOM, REGN, ROST, SBAC, STX, SHPG, SIRI, SWKS, SYMC, TMUS, TRIP, TSCO, TSLA, TXN, ULTA, VIAB, VOD, VRSK, VRTX, WBA, WDC, XLNX, XRAY, YHOO'.split(', '),
+			// symbols: 'AAL, AAPL, ADBE, ADI, ADP, ADSK, AKAM, ALXN, AMAT, AMGN, AMZN, ATVI, AVGO, BIDU, BIIB, BMRN, CA, CELG, CERN, CHKP, CHTR, CTRP, CTAS, CSCO, CTXS, CMCSA, COST, CSX, CTSH, DISCA, DISCK, DISH, DLTR, EA, EBAY, ESRX, EXPE, FAST, FB, FISV, FOX, FOXA, GILD, GOOG, HAS, HSIC, HOLX, ILMN, INCY, INTC, INTU, ISRG, JD, KLAC, KHC, LBTYA, LILA, LILAK, LRCX, QVCA, LVNTA, MAR, MCHP, MDLZ, MNST, MSFT, MU, MXIM, MYL, NCLH, NFLX, NVDA, ORLY, PAYX, PCAR, PCLN, QCOM, REGN, ROST, SBAC, STX, SHPG, SIRI, SWKS, SYMC, TMUS, TRIP, TSCO, TSLA, TXN, ULTA, VIAB, VOD, VRSK, VRTX, WBA, WDC, XLNX, XRAY, YHOO'.split(', '),
+			symbols: 'HEIA'.split(', '),
 			tickers: [
-				{ symbol: 'AAPL', isExpanded: false },
+				{ symbol: 'HEIA', isExpanded: false },
 			],
 
 			quotes: { },
@@ -37,6 +36,7 @@ const definition = {
 
 	mounted() {
 		socketConnection.socket.addEventListener('message', this.onSocketMessage);
+
 		this.subscribe();
 	},
 
@@ -51,7 +51,9 @@ const definition = {
 		},
 
 		onSocketMessage(message) {
-			console.log(message);
+			const data = JSON.parse(message.data);
+
+			this.$set(this.quotes, data.fund, data);
 		},
 
 		addTicker(symbol, isExpanded = false) {
@@ -70,7 +72,9 @@ const definition = {
 		},
 
 		subscribe() {
-			// this.fetchQuote();
+			this.tickerSymbols.forEach((s) => {
+				socketConnection.send(s);
+			});
 		},
 
 	},

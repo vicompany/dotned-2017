@@ -50,19 +50,19 @@ const definition = {
 		},
 
 		bid() {
-			if (!this.quote.Bid) {
+			if (!this.quote.bid) {
 				return null;
 			}
 
-			return parseFloat(this.quote.Bid);
+			return parseFloat(this.quote.bid);
 		},
 
 		ask() {
-			if (!this.quote.Ask) {
+			if (!this.quote.ask) {
 				return null;
 			}
 
-			return parseFloat(this.quote.Ask);
+			return parseFloat(this.quote.ask);
 		},
 
 		quoteMid() {
@@ -131,7 +131,7 @@ const definition = {
 				maximumFractionDigits: precision,
 			});
 		},
-	}
+	},
 };
 
 export default definition;
