@@ -37,19 +37,23 @@ namespace Stock.Grains
 
             var reporter = this.GrainFactory.GetGrain<IFundReporter>(0);
             await  reporter.ReportAboutFund(this.GetPrimaryKeyString());
+
+            var cachedReporter = this.GrainFactory.GetGrain<ICachedFundReporter>(0);
+            await cachedReporter.ReportAboutFund(this.GetPrimaryKeyString());
+
             await base.OnActivateAsync();
         }
 
         public Task<List<decimal>> GetLatestAsk()
         {
-            //System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(1000);
             return Task.FromResult(latestAsk);
         }
 
         public Task<List<decimal>> GetLatestBid()
         {
          
-            //System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(1000);
             return Task.FromResult(latestBid);
         }
 

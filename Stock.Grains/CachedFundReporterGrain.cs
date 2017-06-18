@@ -5,15 +5,42 @@ using Orleans;
 using Orleans.Concurrency;
 using Stock.Interfaces;
 using Stock.Models;
+using System;
 
 namespace Stock.Grains
 {
     [StatelessWorker]
-    public class FundReporterGrain : Grain, IFundReporter
+    public class CachedFundReporterGrain : Grain, ICachedFundReporter
     {
-        List<string> fundsToReportAbout = new List<string>();
-        public async  Task<List<FundReport>> GetReport()
+        public override Task OnActivateAsync()
         {
+            this.lifetime = TimeSpan.FromSeconds(10);
+            this.lifetimeTimer = RegisterTimer(
+              async state => {
+                  var items = await this.AggregateData();
+                  var cacheGrain = this.GrainFactory.GetGrain<ICacheGrain<List<FundReport>>>("report");
+                  await cacheGrain.Set(items);
+              },
+              null,
+              TimeSpan.FromSeconds(0),
+              this.lifetime);
+
+            return base.OnActivateAsync();
+        }
+        List<string> fundsToReportAbout = new List<string>();
+        private IDisposable lifetimeTimer;
+        private TimeSpan lifetime;
+
+        public async Task<List<FundReport>> GetReport()
+        {
+            var cacheGrain = this.GrainFactory.GetGrain<ICacheGrain<List<FundReport>>>("report");
+            var items = await cacheGrain.Get();
+
+            return items;
+        }
+
+        private async Task<List<FundReport>> AggregateData()
+        { 
             var report = new List<FundReport>();
             foreach(var fund in fundsToReportAbout)
             {
@@ -38,6 +65,6 @@ namespace Stock.Grains
            return Task.CompletedTask;
         }
 
-      
+       
     }
 }
