@@ -8,7 +8,7 @@ namespace Stock.Interfaces
     
     public interface IFundReporter  : IGrainWithIntegerKey
     {
-        Task ReportAboutFund(string fund);
+        Task TrackFund(string fund);
 
         Task<List<FundReport>> GetReport();
     }

@@ -15,8 +15,8 @@ namespace Stock.Grains
 
         private ObserverSubscriptionManager<IFundObserver> subscribers =
             new ObserverSubscriptionManager<IFundObserver>();
-        private List<decimal> latestAsk = new List<decimal>();
-        private List<decimal> latestBid = new List<decimal>();
+        private List<decimal> latestAskPrices = new List<decimal>();
+        private List<decimal> latestBidPrices = new List<decimal>();
         private IDisposable timer;
 
         public override async Task OnActivateAsync()
@@ -25,9 +25,9 @@ namespace Stock.Grains
             this.timer = this.RegisterTimer((item) =>
                 {
                     var ask = offset + rand.Next(0, 1000) / 10000.0m;
-                    this.latestAsk.Add(ask);
+                    this.latestAskPrices.Add(ask);
                     var bid = offset + rand.Next(0, 1000) / 10000.0m;
-                    this.latestBid.Add(bid);
+                    this.latestBidPrices.Add(bid);
 
                     this.subscribers.Notify(s => s.SendMessage($@"{{fund: ""{this.GetPrimaryKeyString()}"", ask: {ask.ToString(this.us)}, bid: {ask.ToString(this.us)}}}"));
 
@@ -36,25 +36,25 @@ namespace Stock.Grains
                 }, this, TimeSpan.FromSeconds(0), TimeSpan.FromMilliseconds(500));
 
             var reporter = this.GrainFactory.GetGrain<IFundReporter>(0);
-            await  reporter.ReportAboutFund(this.GetPrimaryKeyString());
+            await  reporter.TrackFund(this.GetPrimaryKeyString());
 
             var cachedReporter = this.GrainFactory.GetGrain<ICachedFundReporter>(0);
-            await cachedReporter.ReportAboutFund(this.GetPrimaryKeyString());
+            await cachedReporter.TrackFund(this.GetPrimaryKeyString());
 
             await base.OnActivateAsync();
         }
 
-        public Task<List<decimal>> GetLatestAsk()
+        public Task<List<decimal>> GetLatestAskPrices()
         {
             System.Threading.Thread.Sleep(1000);
-            return Task.FromResult(latestAsk);
+            return Task.FromResult(latestAskPrices);
         }
 
-        public Task<List<decimal>> GetLatestBid()
+        public Task<List<decimal>> GetLatestBidPrices()
         {
          
             System.Threading.Thread.Sleep(1000);
-            return Task.FromResult(latestBid);
+            return Task.FromResult(latestBidPrices);
         }
 
         public Task SetOffset(decimal offset)

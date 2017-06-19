@@ -17,7 +17,7 @@ namespace Stock.Website.Controllers
         {
              var a = GrainClient.GrainFactory.GetGrain<IFund>("Shell");
              await a.SetOffset(23); 
-             a = GrainClient.GrainFactory.GetGrain<IFund>("Delta Loyd");
+             a = GrainClient.GrainFactory.GetGrain<IFund>("Delta Lloyd");
              await a.SetOffset(123);
              a =  GrainClient.GrainFactory.GetGrain<IFund>("Google");
              await a.SetOffset(453);
