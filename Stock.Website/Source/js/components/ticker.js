@@ -92,7 +92,7 @@ const definition = {
 				this.isNegativeTick = true;
 			}
 
-			setTimeout(this.resetTickStates, 500);
+			setTimeout(this.resetTickStates, 300);
 		},
 	},
 
