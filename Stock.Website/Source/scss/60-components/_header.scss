@@ -1,0 +1,12 @@
+.header {
+	margin-bottom: $distance-m;
+
+	padding: $distance-m;
+	background:$color-white-transparent;
+	border-bottom: $border-width-s solid $color-gray-lighter;
+}
+
+.header__logo {
+	width: auto;
+	max-width: 11rem;
+}

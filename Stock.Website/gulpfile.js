@@ -91,9 +91,7 @@ gulp.task('js', function () {
 
 gulp.task('serve', () => {
 	browserSync.init({
-		server: './',
-		port: 1337,
-		open: false,
+		proxy: 'http://localhost:54372/demo',
 	});
 });
 
@@ -110,7 +108,7 @@ gulp.task('watch', () => {
 		gulp.start('copy');
 	});
 
-	watch(['./*.html', './dist/**'], () => {
+	watch(['./*.cshtml', './dist/**'], () => {
 		browserSync.reload();
 	});
 });

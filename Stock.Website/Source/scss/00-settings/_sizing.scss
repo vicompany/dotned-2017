@@ -1,7 +1,6 @@
 $base-size: 16; // px
 $base-size-rem: ($base-size / 16) * 1rem; // to REM
 
-
 $distance-s: $base-size-rem / 1.5;
 $distance-m: $base-size-rem;
 $distance-l: $base-size-rem * 1.5;
@@ -10,3 +9,9 @@ $gutter: 		$base-size-rem;
 $gutter-half: 	$gutter / 2;
 
 $site-max-width: 70rem;
+
+$border-width-s: 1px;
+$border-width-m: 2px;
+$border-width-l: 3px;
+
+$border-radius-s: 0.2rem;

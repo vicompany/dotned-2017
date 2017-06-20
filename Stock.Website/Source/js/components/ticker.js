@@ -84,15 +84,13 @@ const definition = {
 				return;
 			}
 
-			this.resetTickStates();
-
 			if (newVal > oldVal) {
+				this.isNegativeTick = false;
 				this.isPositiveTick = true;
 			} else {
 				this.isNegativeTick = true;
+				this.isPositiveTick = false;
 			}
-
-			setTimeout(this.resetTickStates, 300);
 		},
 	},
 

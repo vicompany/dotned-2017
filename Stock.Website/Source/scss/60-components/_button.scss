@@ -1,7 +1,19 @@
 .button {
 	padding: $distance-s;
-	background-color: $color-secondary;
-	color: $color-white;
-	border: none;
+
+	border: $border-width-m solid $color-black;
+	border-radius: $border-radius-s;
+
+	color: $color-black;
+	background-color: $color-white;
+
 	cursor: pointer;
+
+	transition: background-color $anim-speed-fast $anim-ease-in,
+				color $anim-speed-fast $anim-ease-in;
+
+	&:hover {
+		background-color: $color-black;
+		color: $color-white;
+	}
 }

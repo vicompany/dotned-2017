@@ -1,0 +1,10 @@
+.field {
+	margin-bottom: $distance-s;
+}
+
+.field__input {
+	padding: $distance-s;
+
+	border: $border-width-m solid $color-black;
+	border-radius: $border-radius-s;
+}

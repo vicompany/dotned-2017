@@ -30,9 +30,37 @@
 		flex-grow: 0;
 	}
 
-	// &:not(.is-expanded) + & {
-	// 	border-left: 1px solid $color-gray;
-	// }
+	@include respond-to(small) {
+		&--small-1\/2 {
+			flex-basis: (100% / 2);
+			flex-grow: 0;
+		}
+
+		&--small-1\/3 {
+			flex-basis: (100% / 3);
+			flex-grow: 0;
+		}
+	}
+
+	@include respond-to(medium) {
+		&--medium-1\/2 {
+			flex-basis: (100% / 2);
+		}
+
+		&--medium-1\/3 {
+			flex-basis: (100% / 3);
+		}
+	}
+
+	@include respond-to(large) {
+		&--large-1\/2 {
+			flex-basis: (100% / 2);
+		}
+
+		&--large-1\/3 {
+			flex-basis: (100% / 3);
+		}
+	}
 
 	&.is-expanded {
 		flex-basis: 100%;
