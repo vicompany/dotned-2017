@@ -12,14 +12,21 @@ namespace Stock.Grains
     public class FundReporterGrain : Grain, IFundReporter
     {
         List<string> fundsToReportAbout = new List<string>();
+        
+        public Task TrackFund(string fund)
+        {
+           this.fundsToReportAbout.Add(fund);
+           return Task.CompletedTask;
+        }
+
         public async  Task<List<FundReport>> GetReport()
         {
             var report = new List<FundReport>();
             foreach(var fund in fundsToReportAbout)
             {
                 var fundGrain = this.GrainFactory.GetGrain<IFund>(fund);
-                var asks = await fundGrain.GetLatestAsk();
-                var bids  = await fundGrain.GetLatestBid();
+                var asks = await fundGrain.GetLatestAskPrices();
+                var bids  = await fundGrain.GetLatestBidPrices();
 
                 report.Add(new FundReport(){
                     Name = fund,
@@ -32,10 +39,8 @@ namespace Stock.Grains
             return report;
         }
 
-        public Task ReportAboutFund(string fund)
-        {
-           this.fundsToReportAbout.Add(fund);
-           return Task.CompletedTask;
-        }
+        
+
+      
     }
 }

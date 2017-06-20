@@ -9,8 +9,19 @@
     </div>
 }
 
-
-
+<h1>Info</h1>
+<p>
+    This shows vue.js working with a Microsoft Orleans cluster. Please use <a href="/cached/demo">cached</a> demo for more fluent experience
+    <h3>Vue.js</h3>
+    -- TODO --
+    <h3>Orleans</h3>
+    It demonstrates;
+    <ul>
+        <li>Basic grain usage</li>
+        <li>Grain Observer </li>
+        <li>Caching with grains</li>
+    </ul>
+</p>
 <div class="container">
 	<main class="main">
 
@@ -63,14 +74,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach(var fund in Model.Report)
+                    @if (Model.Report != null)
                     {
-                        <tr>
-                            <td>@fund.Name</td>
-                            <td>@fund.AmountOfPrices</td>
-                            <td>@fund.AverageBid.ToString("0.00000")</td>
-                            <td>@fund.AverageAsk.ToString("0.00000")</td>
-                        </tr>
+                        foreach (var fund in Model.Report)
+                        {
+                            <tr>
+                                <td>@fund.Name</td>
+                                <td>@fund.AmountOfPrices</td>
+                                <td>@fund.AverageBid.ToString("0.00000")</td>
+                                <td>@fund.AverageAsk.ToString("0.00000")</td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>

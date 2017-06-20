@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Stock.Interfaces
 {
     
-    public interface IFundReporter  : IGrainWithIntegerKey
+    public interface ICachedFundReporter : IGrainWithIntegerKey
     {
         Task TrackFund(string fund);
 

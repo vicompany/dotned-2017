@@ -9,7 +9,8 @@ using Stock.Website.Models;
 
 namespace Stock.Website.Controllers
 { 
-    public class HomeController : Controller
+    [Route("cached")]
+    public class HomeCachedController : Controller
     {
         [HttpGet, Route("init")]
         public async Task<IActionResult> Init()
@@ -23,26 +24,16 @@ namespace Stock.Website.Controllers
              a = GrainClient.GrainFactory.GetGrain<IFund>("VI Company");
              await a.SetOffset(42);
 
+            var cached = GrainClient.GrainFactory.GetGrain<ICachedFundReporter>(0);
+            
             return RedirectToAction("Demo");
         }
         [HttpGet, Route("demo")]
         public async Task<IActionResult> Demo()
         {
-           var reporter = GrainClient.GrainFactory.GetGrain<IFundReporter>(0);
-           var items = await reporter.GetReport();
-           return View("demo", new FundReportModel(){ Report = items });
-        }
-
-        [HttpGet, Route("index/{fund}")]
-        public async Task<IActionResult> Index(string fund)
-        {
-            var fundShell = GrainClient.GrainFactory.GetGrain<IFund>(fund);
-            var latestBid = await fundShell.GetLatestBidPrices();
-            var latestAsk = await fundShell.GetLatestAskPrices();
-            ViewBag.LatestBid = latestBid;
-            ViewBag.LatestAsk = latestAsk;
-            return View("index");
-        }
+           var cached = GrainClient.GrainFactory.GetGrain<ICachedFundReporter>(0);            
+           return View("../Home/demo", new FundReportModel(){ Report = await cached.GetReport() });
+        } 
 
     }
 }
