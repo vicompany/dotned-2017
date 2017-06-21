@@ -15,9 +15,7 @@ namespace Stock.Website.Models
     /// </summary>
     public class SocketHandler : IFundObserver
     {
-        public List<WebSocket> WebSockets = new List<WebSocket>();
-
-        public IFundObserver ObserverRef { get; set; }
+        private readonly List<WebSocket> webSockets = new List<WebSocket>();
 
         public SocketHandler()
         {
@@ -26,31 +24,31 @@ namespace Stock.Website.Models
             this.ObserverRef = task.Result;
         }
 
+        public IFundObserver ObserverRef { get; set; }
+
         public void AddSocket(WebSocket socket)
         {
-            this.WebSockets.Add(socket);
+            this.webSockets.Add(socket);
         }
 
         public void SendMessage(string message)
         {
             try
             {
-                foreach (var socket in this.WebSockets)
+                foreach (var socket in this.webSockets)
                 {
-                    socket.SendAsync(
-                        new ArraySegment<byte>(Encoding.UTF8.GetBytes(message), 0, message.Length),
-                        WebSocketMessageType.Text,
-                        true,
-                        CancellationToken.None);
+                    socket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(message), 0, message.Length), WebSocketMessageType.Text, true, CancellationToken.None);
                 }
             }
-            catch(Exception )
-            { }
+            catch (Exception)
+            {
+                // Eat this exception and swallow it whole
+            }
         }
 
         internal void RemoveSocket(WebSocket socket)
         {
-            this.WebSockets.Remove(socket);
+            this.webSockets.Remove(socket);
         }
     }
 }

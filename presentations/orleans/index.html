@@ -33,27 +33,19 @@
 				<section>
 					<h2>Contents</h2>
 					<ul>
-						<li class="fragment">Who am I?</li>
-						<li class="fragment">Which problem did we face</li>
-						<li class="fragment">What is an Actor model?</li>
-						<li class="fragment">Microsoft Orleans basics </li>
-						<li class="fragment">Demo time</li>
+						<li>Which problem did we face?</li>
+						<li>What is an Actor model?</li>
+						<li>Microsoft Orleans basics </li>
+						<li>Demo time</li>
 					</ul>
 				</section>
 
 				<section>
-					<h2>Who am I?</h2>
-
-					<div class="fragment">Casper Broeren</div>
-					<div class="fragment">Backend developer</div> 
-				</section>
-
-				<section>
-					<h2>Which problem did we face</h2>
+					<h2>Which problem did we face?</h2>
 					<section>
-						<h3>Caching always gets in the way</h3>
-						<ul>
-							<li>Updates of source data are hard</li>
+						<h3>Caching... <span class="fragment">is hard</span></h3>
+						<ul class="fragment">
+							<li>Updates of source data</li>
 							<li>Fresh-data penalties</li>
 						</ul>
 					</section>
@@ -67,9 +59,9 @@
 					</section>
 
 					<section>
-						<h3>Doing transactions in proper way</h3>
+						<h3>Performing transactions in proper way</h3>
 						<ul>
-							<li>No race conditions or complex </li>
+							<li>Avoiding race conditions</li>
 							<li>Using complex business rules in an orderly fashion</li>
 						</ul>
 					</section> 
@@ -84,16 +76,6 @@
 						<blockquote cite="https://en.wikipedia.org/wiki/Actor_model">
 						“A mathematical model of concurrent computation that treats "actors" as the universal primitives of concurrent computation”
 						</blockquote>
-					</section>
-					
-					<section>
-						<h3>An actor can be described as </h3>
-						<ul>
-							<li class="fragment">It's behaviour is single threaded </li>
-							<li class="fragment">Has an address</li>
-							<li class="fragment">Has a messagebox</li>
-							<li class="fragment">Has a state <span class="fragment">(which can be persisted)</span></li>
-						</ul>
 						<div class="fragment">
 							<br/>
 							<h5>Populair frameworks</h5>
@@ -104,12 +86,22 @@
 					</section>
 					
 					<section>
+						<h3>An actor: </h3>
+						<ul>
+							<li class="fragment">Has an address</li>
+							<li class="fragment">Has a state <span class="fragment">(which can be persisted)</span></li>
+							<li class="fragment">Has a messagebox</li> 
+							<li class="fragment">Has single-threaded behaviour </li>
+						</ul>
+					</section>
+					
+					<section>
 						<h3>Virtual Actor-model = Orleans</h3>
 						<ul>
 							<li class="fragment">Actors are always present</li>
 							<li class="fragment">Keybased instead of Uri based</li>
 							<li class="fragment">Async methods instead of messagebox</li>
-							<li class="fragment">Build on .NET Framework</li>
+							<li class="fragment">Built on the .NET Framework</li>
 						</ul>
 					</section>
 				</section>
@@ -117,21 +109,25 @@
 				<section>
 					<h2>Microsoft Orleans basics</h2>
 					<section>
+						Terminology is slightly different
+					</section>
+					
+					<section>
 						<br/>
 						<h3>Grains are the actors</h3>
 						<img src="lib/img/grain-corn.png" class="inline-image" width="25%"   />
-						<p>The class you write to express the actor logic</p>
+						<p>The classes you write to express the actor logic</p>
 					</section>
 
 					<section> 
 						<h3>The grains live in a silo</h3>
 						<img src="lib/img/silo.jpg" class="inline-image"  />
-						<p>Your process which hosts the grains</p>
+						<p>A process which hosts the grains</p>
 					</section>
 					<section> 
 						<h3>A bundle of silos are a cluster</h3>
 						<img src="lib/img/cluster.jpg" class="inline-image"  />
-						<p>A bunch of silo's across mutiple datacenters </p>
+						<p>Multiple processes, possibly across mutiple datacenters </p>
 					</section>
 					<section > 
 						<img src="lib/img/flow.png" width="95%"    />
@@ -142,11 +138,10 @@
 				<section>
 					<h2>Orleans features</h2>					
 					<ul>
-						<li><b>observers:</b> <br /><small>The grain calls your outside the grain code</small></li>
-						<li><b>timers & reminders:</b> <br /><small>The grain calls it self. </small></li>
-						<li><b>persistence:</b> <br /><small>Mutlple type of stores and per enviroment configurable</small></li>
-						<li><b>management:</b> <br /><small>Off the shelf cluster and silo management</small></li>
-						
+						<li><b>Observers:</b> <br /><small>The grain calls your outside the grain code</small></li>
+						<li><b>Timers & Reminders:</b> <br /><small>The grain calls it self. </small></li>
+						<li><b>Persistence:</b> <br /><small>Mutlple type of stores and per enviroment configurable</small></li>
+						<li><b>Management:</b> <br /><small>Off the shelf cluster and silo management</small></li>
 					</ul> 
 				</section>
 
@@ -155,7 +150,7 @@
 					<ol>
 						<li>Basic setup of a Orleans project</li>						
 						<li>Cache grain</li>
-						<li>Observers </li>
+						<li>Observers</li>
 					</ol>
 				</section>
 			</div>

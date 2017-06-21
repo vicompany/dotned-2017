@@ -1,11 +1,12 @@
 using System.Collections.Generic;
-using Stock.Models;
-using Orleans;
 using System.Threading.Tasks;
+
+using Orleans;
+
+using Stock.Models;
 
 namespace Stock.Interfaces
 {
-    
     public interface ICachedFundReporter : IGrainWithIntegerKey
     {
         Task TrackFund(string fund);

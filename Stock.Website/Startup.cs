@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -29,7 +27,7 @@ namespace Stock.Website
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
-            Configuration = builder.Build();
+            this.Configuration = builder.Build();
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -44,7 +42,7 @@ namespace Stock.Website
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
             if (env.IsDevelopment())
@@ -72,7 +70,7 @@ namespace Stock.Website
                         if (context.WebSockets.IsWebSocketRequest)
                         {
                             WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                            await this.HandleWebSocket(context, webSocket);
+                            await HandleWebSocket(context, webSocket);
                         }
                         else
                         {
@@ -88,7 +86,6 @@ namespace Stock.Website
 
         private async Task HandleWebSocket(HttpContext context, WebSocket webSocket)
         {
-            string ok = "OK";
             var buffer = new byte[1024 * 4];
 
             while (!webSocket.CloseStatus.HasValue)
@@ -103,7 +100,6 @@ namespace Stock.Website
                         socketHandler.AddSocket(webSocket);
 
                         await grain.SetListener(socketHandler.ObserverRef);
-                        
                     }
                     catch (Exception exc)
                     {
@@ -112,6 +108,7 @@ namespace Stock.Website
                     }
                 }
             }
+
             socketHandler.RemoveSocket(webSocket);
             
             await webSocket.CloseAsync(webSocket.CloseStatus.Value, "End", CancellationToken.None);

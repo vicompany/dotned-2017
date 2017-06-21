@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
+
 using Microsoft.AspNetCore.Hosting;
+
 using Orleans;
 using Orleans.Runtime;
 using Orleans.Runtime.Configuration;
-using System.Threading;
 
 namespace Stock.Website
 {
@@ -37,7 +36,6 @@ namespace Stock.Website
 
                 Console.ReadLine(); 
             }
-
         }
 
         private static void InitializeWithRetries(ClientConfiguration config, int initializeAttemptsBeforeFailing)
@@ -59,6 +57,7 @@ namespace Stock.Website
                     {
                         throw;
                     }
+
                     Thread.Sleep(TimeSpan.FromSeconds(2));
                 }
             }

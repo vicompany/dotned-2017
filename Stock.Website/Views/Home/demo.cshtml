@@ -1,4 +1,8 @@
-﻿@model Stock.Website.Models.FundReportModel
+﻿@using System.IO
+@using Microsoft.AspNetCore.Mvc.Razor
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
+@using Stock.Website.Models
+@model FundReportModel
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -10,10 +14,12 @@
 }
 
 <main class="main">
-   @* <section class="section">
+    <section class="section">
         <h1>Info</h1>
-        This shows vue.js working with a Microsoft Orleans cluster. Please use <a href="/cached/demo">cached</a> demo for more fluent experience
-        <h2>Orleans</h2>
+        <p>
+            This shows vue.js working with a Microsoft Orleans cluster. Please use <a href="/cached/demo">cached</a> demo for more fluent experience
+        </p>
+        @*    <h2>Orleans</h2>
 
         It demonstrates;
         <ul>
@@ -66,29 +72,29 @@
     <section class="section">
         <h2>Fund history</h2>
 
-        Please init the funds by clicking <a asp-action="Init" >Here</a>
+        Please init the funds by clicking <a asp-action="Init">Here</a>
         <table class="table">
             <thead>
-                <tr>
-                    <td>Fund</td>
-                    <td>Amount of bids</td>
-                    <td>Average ask</td>
-                    <td>Average bid</td>
-                </tr>
+            <tr>
+                <td>Fund</td>
+                <td>Amount of bids</td>
+                <td>Average ask</td>
+                <td>Average bid</td>
+            </tr>
             </thead>
             <tbody>
-                @if (Model.Report != null)
+            @if (Model.Report != null)
+            {
+                foreach (var fund in Model.Report)
                 {
-                    foreach (var fund in Model.Report)
-                    {
-                        <tr>
-                            <td>@fund.Name</td>
-                            <td>@fund.AmountOfPrices</td>
-                            <td>@fund.AverageBid.ToString("0.00000")</td>
-                            <td>@fund.AverageAsk.ToString("0.00000")</td>
-                        </tr>
-                    }
+                    <tr>
+                        <td>@fund.Name</td>
+                        <td>@fund.AmountOfPrices</td>
+                        <td>@fund.AverageBid.ToString("0.00000")</td>
+                        <td>@fund.AverageAsk.ToString("0.00000")</td>
+                    </tr>
                 }
+            }
             </tbody>
         </table>
 

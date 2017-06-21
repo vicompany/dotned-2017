@@ -1,6 +1,8 @@
-﻿using Orleans;
-using System; 
+﻿using System;
 using System.Threading.Tasks;
+
+using Orleans;
+
 using Stock.Interfaces;
 
 namespace Stock.Grains
@@ -24,6 +26,7 @@ namespace Stock.Grains
 
                 DelayDeactivation(lifeTime.Value);
             }
+
             return Task.CompletedTask;
         }
 

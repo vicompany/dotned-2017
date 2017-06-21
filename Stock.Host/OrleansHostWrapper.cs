@@ -7,7 +7,7 @@ using Orleans.Runtime.Host;
 
 namespace Stock.Host
 {
-    class OrleansHostWrapper
+    public class OrleansHostWrapper
     {
         private readonly SiloHost siloHost;
 
@@ -24,14 +24,13 @@ namespace Stock.Host
                 config.Globals.DeploymentId = siloArgs.DeploymentId;
             }
 
-            
-            siloHost = new SiloHost(siloArgs.SiloName, config);
-            siloHost.LoadOrleansConfig();
+            this.siloHost = new SiloHost(siloArgs.SiloName, config);
+            this.siloHost.LoadOrleansConfig();
         }
 
         public int Run()
         {
-            if (siloHost == null)
+            if (this.siloHost == null)
             {
                 SiloArgs.PrintUsage();
                 return 1;
@@ -39,21 +38,21 @@ namespace Stock.Host
 
             try
             {
-                siloHost.InitializeOrleansSilo();
+                this.siloHost.InitializeOrleansSilo();
 
-                if (siloHost.StartOrleansSilo())
+                if (this.siloHost.StartOrleansSilo())
                 {
-                    Console.WriteLine($"Successfully started Orleans silo '{siloHost.Name}' as a {siloHost.Type} node.");
+                    Console.WriteLine($"Successfully started Orleans silo '{this.siloHost.Name}' as a {this.siloHost.Type} node.");
                     return 0;
                 }
                 else
                 {
-                    throw new OrleansException($"Failed to start Orleans silo '{siloHost.Name}' as a {siloHost.Type} node.");
+                    throw new OrleansException($"Failed to start Orleans silo '{this.siloHost.Name}' as a {this.siloHost.Type} node.");
                 }
             }
             catch (Exception exc)
             {
-                siloHost.ReportStartupError(exc);
+                this.siloHost.ReportStartupError(exc);
                 Console.Error.WriteLine(exc);
                 return 1;
             }
@@ -61,27 +60,28 @@ namespace Stock.Host
 
         public int Stop()
         {
-            if (siloHost != null)
+            if (this.siloHost != null)
             {
                 try
                 {
-                    siloHost.StopOrleansSilo();
-                    siloHost.Dispose();
-                    Console.WriteLine($"Orleans silo '{siloHost.Name}' shutdown.");
+                    this.siloHost.StopOrleansSilo();
+                    this.siloHost.Dispose();
+                    Console.WriteLine($"Orleans silo '{this.siloHost.Name}' shutdown.");
                 }
                 catch (Exception exc)
                 {
-                    siloHost.ReportStartupError(exc);
+                    this.siloHost.ReportStartupError(exc);
                     Console.Error.WriteLine(exc);
                     return 1;
                 }
             }
+
             return 0;
         }
 
         private class SiloArgs
         {
-            public SiloArgs(string siloName, string deploymentId)
+            private SiloArgs(string siloName, string deploymentId)
             {
                 this.DeploymentId = deploymentId;
                 this.SiloName = siloName;
@@ -113,11 +113,12 @@ namespace Stock.Host
                     else if (arg.Contains("="))
                     {
                         string[] parameters = arg.Split('=');
-                        if (String.IsNullOrEmpty(parameters[1]))
+                        if (string.IsNullOrEmpty(parameters[1]))
                         {
                             Console.WriteLine($"Bad command line arguments supplied: {arg}");
                             return null;
                         }
+
                         switch (parameters[0].ToLowerInvariant())
                         {
                             case "deploymentid":
@@ -137,6 +138,7 @@ namespace Stock.Host
                         return null;
                     }
                 }
+
                 // Default to machine name
                 siloName = siloName ?? Dns.GetHostName();
                 return new SiloArgs(siloName, deploymentId);

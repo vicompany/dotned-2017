@@ -1,4 +1,5 @@
-﻿@model Stock.Website.Models.FundModel
+﻿@using Stock.Website.Models
+@model Stock.Website.Models.FundModel
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -8,10 +9,10 @@
         @ViewBag.Message
     </div>
 }
-<h1>Funds</h1> 
+<h1>Funds</h1>
 <form method="post" action="">
     Ask: @Html.TextBoxFor(m => m.Ask)<br/>
     or<br/>
     Bid: @Html.TextBoxFor(m => m.Bid)<br/>
-    <input type="submit" value="Send" />
+    <input type="submit" value="Send"/>
 </form>

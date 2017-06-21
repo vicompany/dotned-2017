@@ -1,32 +1,34 @@
-﻿using Stock.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
 
 using Orleans;
 
+using Stock.Interfaces;
+
 namespace Stock.Grains
 {
-    public class FundGrain : Orleans.Grain, IFund
+    public class FundGrain : Grain, IFund
     {
-        private decimal offset = 1;
         private readonly CultureInfo us = new CultureInfo("en-US");
-
-        private ObserverSubscriptionManager<IFundObserver> subscribers =
+        private readonly List<decimal> latestAskPrices = new List<decimal>();
+        private readonly List<decimal> latestBidPrices = new List<decimal>();
+        private readonly ObserverSubscriptionManager<IFundObserver> subscribers =
             new ObserverSubscriptionManager<IFundObserver>();
-        private List<decimal> latestAskPrices = new List<decimal>();
-        private List<decimal> latestBidPrices = new List<decimal>();
+
+        private decimal offset = 1;
+
         private IDisposable timer;
 
         public override async Task OnActivateAsync()
         {
-            var rand = new Random(System.Environment.TickCount);
-            this.timer = this.RegisterTimer((item) =>
+            var rand = new Random(Environment.TickCount);
+            this.timer = RegisterTimer((item) =>
                 {
-                    var ask = offset + rand.Next(0, 1000) / 10000.0m;
+                    var ask = this.offset + rand.Next(0, 1000) / 10000.0m;
                     this.latestAskPrices.Add(ask);
-                    var bid = offset + rand.Next(0, 1000) / 10000.0m;
+                    var bid = this.offset + rand.Next(0, 1000) / 10000.0m;
                     this.latestBidPrices.Add(bid);
 
                     this.subscribers.Notify(s => s.SendMessage($@"{{""fund"": {this.GetPrimaryKeyString()}, ""ask"": {ask.ToString(this.us)}, ""bid"": {bid.ToString(this.us)}}}"));
@@ -36,7 +38,7 @@ namespace Stock.Grains
                 }, this, TimeSpan.FromSeconds(0), TimeSpan.FromMilliseconds(500));
 
             var reporter = this.GrainFactory.GetGrain<IFundReporter>(0);
-            await  reporter.TrackFund(this.GetPrimaryKeyString());
+            await reporter.TrackFund(this.GetPrimaryKeyString());
 
             var cachedReporter = this.GrainFactory.GetGrain<ICachedFundReporter>(0);
             await cachedReporter.TrackFund(this.GetPrimaryKeyString());
@@ -47,14 +49,14 @@ namespace Stock.Grains
         public Task<List<decimal>> GetLatestAskPrices()
         {
             System.Threading.Thread.Sleep(1000);
-            return Task.FromResult(latestAskPrices);
+            return Task.FromResult(this.latestAskPrices);
         }
 
         public Task<List<decimal>> GetLatestBidPrices()
         {
          
             System.Threading.Thread.Sleep(1000);
-            return Task.FromResult(latestBidPrices);
+            return Task.FromResult(this.latestBidPrices);
         }
 
         public Task SetOffset(decimal offset)
@@ -69,10 +71,11 @@ namespace Stock.Grains
             {
                 this.subscribers.Unsubscribe(listenerFundObserver);
             }
-            catch(Exception)
+            catch (Exception)
             {
-                
+                // Let's ignore this for now
             }
+
             this.subscribers.Subscribe(listenerFundObserver);
         }
     }
