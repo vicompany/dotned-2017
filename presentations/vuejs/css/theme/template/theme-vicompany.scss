@@ -1,0 +1,19 @@
+.reveal {
+	a {
+		text-decoration: underline;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
+	.logo {
+		max-width: 50%;
+		border: none;
+		box-shadow: none;
+	}
+
+	.progress span {
+		background-color: $brandColor;
+	}
+}
