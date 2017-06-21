@@ -12,6 +12,8 @@
 
 
 // Include theme-specific fonts
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans:400,700');
+@import url('https://fonts.googleapis.com/css?family=Questrial');
 @import url(../../lib/font/source-sans-pro/source-sans-pro.css);
 
 
@@ -26,7 +28,7 @@ $headingColor: #222;
 
 $mainFontSize: 35px;
 $mainFont: 'Source Sans Pro', Helvetica, sans-serif;
-$headingFont: 'Source Sans Pro', Helvetica, sans-serif;
+$headingFont: 'Questrial', sans-serif;
 $headingTextShadow: none;
 $headingLetterSpacing: normal;
 $headingTextTransform: uppercase;
