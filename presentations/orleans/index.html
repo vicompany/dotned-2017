@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>VueJS</title>
+
+		<link rel="stylesheet" href="../css/reveal.css">
+		<link rel="stylesheet" href="../css/theme/vicompany.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h3>DotNed meeting June 2017</h3>
+					<h1>Microsoft Orleans</h1>
+					<h3>for caching and more</h3>
+				</section>
+
+				<section>
+					<h2>Contents</h2>
+					<ul>
+						<li class="fragment">Who am I?</li>
+						<li class="fragment">Which problem did we face</li>
+						<li class="fragment">What is an Actor model?</li>
+						<li class="fragment">Microsoft Orleans basics </li>
+						<li class="fragment">Demo time</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Who am I?</h2>
+
+					<div class="fragment">Casper Broeren</div>
+					<div class="fragment">Backend developer</div>
+					<div class="fragment"><img src="lib/img/logo.svg" alt="VI Company logo" class="logo" /></div>
+				</section>
+
+				<section>
+					<h2>Which problem did we face</h2>
+					<section>
+						<h3>Caching always gets in the way</h3>
+						<ul>
+							<li>Updates of source data are hard</li>
+							<li>Fresh-data penalties</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Caching on premise can be expensive</h3>
+						<ul>
+							<li>Memory Cache not ideal because...<span class="fragment"><b>not one cache store</b></span></li>
+							<li>SQL server not ideal because ....<span class="fragment"><b>data cost</b></span></li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Doing transactions in proper way</h3>
+						<ul>
+							<li>No race conditions or complex </li>
+							<li>Using complex business rules in an orderly fashion</li>
+						</ul>
+					</section> 
+					
+				</section>
+
+				<section>
+					<h2>Actor Model</h2>
+
+					<section>
+						<a href="https://en.wikipedia.org/wiki/Actor_model" target="_blank">From Wikipedia:</a>
+						<blockquote cite="https://en.wikipedia.org/wiki/Actor_model">
+						“A mathematical model of concurrent computation that treats "actors" as the universal primitives of concurrent computation”
+						</blockquote>
+					</section>
+					
+					<section>
+						<h3>An actor can be described as </h3>
+						<ul>
+							<li class="fragment">It's behaviour is single threaded </li>
+							<li class="fragment">Has an address</li>
+							<li class="fragment">Has a messagebox</li>
+							<li class="fragment">Has a state <span class="fragment">(which can be persisted)</span></li>
+						</ul>
+						<div class="fragment">
+							<br/>
+							<h5>Populair frameworks</h5>
+							<img src="lib/img/orleans.png" alt="Orleans" class="logo" width="20%" />&nbsp;&nbsp;
+							<img src="lib/img/akka.png" alt="Akka" class="logo" width="10%" />&nbsp;&nbsp;
+							<img src="lib/img/erlang.png" alt="Erlang" class="logo" width="10%" />
+						</div>
+					</section>
+					
+					<section>
+						<h3>Virtual Actor-model = Orleans</h3>
+						<ul>
+							<li class="fragment">Actors are always present</li>
+							<li class="fragment">Keybased instead of Uri based</li>
+							<li class="fragment">Async methods instead of messagebox</li>
+							<li class="fragment">Build on .NET Framework</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<h2>Microsoft Orleans basics</h2>
+					<section>
+						<br/>
+						<h3>Grains are the actors</h3>
+						<img src="lib/img/grain-corn.png" class="logo" width="25%"   />
+						<p>The class you write to express the actor logic</p>
+					</section>
+
+					<section> 
+						<h3>The grains live in a silo</h3>
+						<img src="lib/img/silo.jpg" class="logo"  />
+						<p>Your process which hosts the grains</p>
+					</section>
+					<section> 
+						<h3>A bundle of silos are a cluster</h3>
+						<img src="lib/img/cluster.jpg" class="logo"  />
+						<p>A bunch of silo's across mutiple datacenters </p>
+					</section>
+					<section > 
+						<img src="lib/img/flow.png" width="95%"    />
+						
+					</section>
+				</section>
+
+				<section>
+					<h2>Orleans features</h2>					
+					<ul>
+						<li><b>observers:</b> <br /><small>The grain calls your outside the grain code</small></li>
+						<li><b>timers & reminders:</b> <br /><small>The grain calls it self. </small></li>
+						<li><b>persistence:</b> <br /><small>Mutlple type of stores and per enviroment configurable</small></li>
+						<li><b>management:</b> <br /><small>Off the shelf cluster and silo management</small></li>
+						
+					</ul> 
+				</section>
+
+				<section>
+					<h1>Demo time</h1>
+					<ol>
+						<li>Basic setup of a Orleans project</li>						
+						<li>Cache grain</li>
+						<li>Observers </li>
+					</ol>
+				</section>
+			</div>
+		</div>
+		<div class="logo"></div>
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				history: true,
+				transition: 'default',
+				center: true,
+				width: 960,
+
+				dependencies: [
+					{ src: '../plugin/markdown/marked.js' },
+					{ src: '../plugin/markdown/markdown.js' },
+					{ src: '../plugin/notes/notes.js', async: true },
+					{ src: '../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
