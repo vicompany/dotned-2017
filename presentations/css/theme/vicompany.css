@@ -16,7 +16,7 @@ body {
 
 .reveal {
   font-family: "Source Sans Pro", Helvetica, sans-serif;
-  font-size: 42px;
+  font-size: 35px;
   font-weight: normal;
   color: #222; }
 
@@ -303,3 +303,11 @@ body {
 
 .reveal .progress span {
   background-color: #e00; }
+
+.reveal .controls {
+  transform: scale(0.5); }
+  .reveal .controls button[disabled] {
+    display: none; }
+
+.reveal .text-white {
+  color: #fff; }

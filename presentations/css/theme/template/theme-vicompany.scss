@@ -16,4 +16,16 @@
 	.progress span {
 		background-color: $brandColor;
 	}
+
+	.controls {
+		transform: scale(0.5);
+
+		button[disabled] {
+			display: none;
+		}
+	}
+
+	.text-white {
+		color: #fff;
+	}
 }
