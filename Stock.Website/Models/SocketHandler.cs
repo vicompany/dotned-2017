@@ -33,17 +33,19 @@ namespace Stock.Website.Models
 
         public void SendMessage(string message)
         {
-            foreach (var socket in this.WebSockets)
+            try
             {
-                socket.SendAsync(
-                    new ArraySegment<byte>(
-                        Encoding.UTF8.GetBytes(message),
-                        0,
-                        message.Length),
-                    WebSocketMessageType.Text,
-                    true,
-                    CancellationToken.None);
+                foreach (var socket in this.WebSockets)
+                {
+                    socket.SendAsync(
+                        new ArraySegment<byte>(Encoding.UTF8.GetBytes(message), 0, message.Length),
+                        WebSocketMessageType.Text,
+                        true,
+                        CancellationToken.None);
+                }
             }
+            catch(Exception )
+            { }
         }
 
         internal void RemoveSocket(WebSocket socket)
