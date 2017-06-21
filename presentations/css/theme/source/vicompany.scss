@@ -72,12 +72,6 @@ section.has-dark-background {
 		}
 	}
 
-	.logo {
-		max-width: 50%;
-		border: none;
-		box-shadow: none;
-	}
-
 	.progress span {
 		background-color: $brandColor;
 	}
@@ -94,11 +88,27 @@ section.has-dark-background {
 
 	.text-white {
 		color: #fff;
+		text-shadow: 0px 5px 4px rgba(0, 0, 0, 0.5);
 	}
-	
+
 	.inline-image {
 		border: none;
 		box-shadow: none;
+
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.image-x-small {
+		max-width: 4rem;
+	}
+
+	.image-small {
+		max-width: 12rem;
+	}
+
+	.image-medium {
+		max-width: 20rem;
 	}
 }
 
