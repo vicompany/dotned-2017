@@ -45,8 +45,11 @@
 					<h1>Intro</h1>
 					<section>
 						<h2>Who am I?</h2>
-						<div class="fragment" data-autoslide="1000">Pim van Die</div>
-						<div class="fragment">Frontender</div>
+						<div class="fragment">
+							<div>Pim van Die</div>
+							<div>Frontender</div>
+						</div>
+
 					</section>
 
 					<section>
@@ -65,10 +68,8 @@
 
 					<section>
 						<h2>Framework?</h2>
-						<span class="fragment" data-autoslide="500">React? Riot? Angular? </span>
+						<span class="fragment" data-autoslide="500">React? Riot? Angular? Backbone?</span>
 						<span class="fragment" data-autoslide="500"> Aurelia? Polymer? Redux? Reflux? Reactify?</span>
-						<span class="fragment" data-autoslide="500"> Aurelia? Polymer? Redux? </span>
-						<span class="fragment" data-autoslide="500">Reflux? Reactify? Backbone?</span>
 						<span class="fragment">Ember? Knockout? MoonJS?</span>
 						<div class="fragment">
 							<img src="lib/img/confused.gif" alt="">
@@ -95,18 +96,42 @@
 				<section>
 					<h2>VueJS Basics: Instance</h2>
 
-					<ul>
-						<li>An application is started with one Vue instance.</li>
-						<li class="fragment">
-							Often refered as the <code>vm</code>, for view model <br />
-							<small>(remember, depending on the view model, the DOM is manipulated).</small>
-						</li>
-						<li class="fragment">only one instance should be needed per page</li>
-					</ul>
+					<section>
+						<ul>
+							<li>An application is started with one Vue instance.</li>
+							<li class="fragment">
+								Often refered as the <code>vm</code>, for view model <br />
+								<small>(remember, depending on the view model, the DOM is manipulated).</small>
+							</li>
+							<li class="fragment">only one instance should be needed per page</li>
+						</ul>
+					</section>
 
-					<p class="fragment">
-						<small><a href="http://codepen.io/demotime/pen/yMQKaE" target="_blank">Demo: My first VueJS instance</a></small>
-					</p>
+					<section>
+						<pre><code class="javascript" data-trim contenteditable>
+						new Vue({
+						  el: '.js-instance',
+						  name: 'vue-instance',
+
+						  data() {
+						    return {
+						      greeting: 'Hello DotNed!',
+						      question: 'Whats up?',
+						    };
+						  },
+						});
+						</code></pre>
+
+						<pre><code class="html" data-trim contenteditable>
+						<div class="container js-instance">
+						    <h1>{{ greeting }}</h1>
+						    <span>{{ question }}</span>
+						</div>
+						</code></pre>
+						<p>
+							<small><a href="http://codepen.io/demotime/pen/yMQKaE" target="_blank">Demo: My first VueJS instance</a></small>
+						</p>
+					</section>
 				</section>
 
 				<section>
@@ -172,6 +197,12 @@
 
 					<p>Thank you for attending.</p>
 					<p>Are there any questions?</p>
+
+					<div>
+						<a href="https://www.vicompany.nl/jobs" target="_blank">
+							<img src="lib/img/logo.svg" class="inline-image image-medium" alt="VI Company logo" />
+						</a>
+					</div>
 				</section>
 			</div>
 		</div>

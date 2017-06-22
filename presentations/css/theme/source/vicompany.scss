@@ -69,6 +69,13 @@ section.has-dark-background {
 
 		&:hover {
 			text-decoration: none;
+
+			img {
+				box-shadow: none;
+				background: none;
+
+				transform: scale(1.1);
+			}
 		}
 	}
 

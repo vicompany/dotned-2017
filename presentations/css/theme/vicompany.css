@@ -304,6 +304,10 @@ body {
   text-decoration: underline; }
   .reveal a:hover {
     text-decoration: none; }
+    .reveal a:hover img {
+      box-shadow: none;
+      background: none;
+      transform: scale(1.1); }
 
 .reveal .progress span {
   background-color: #e00; }
