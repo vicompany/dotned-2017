@@ -49,6 +49,8 @@
                                 key="index"
                                 v-on:remove="remove"
                                 v-bind:index="index"
+
+                                v-bind:quote="quotes[ticker.symbol]"
                                 v-bind:symbol="ticker.symbol"
                                 v-bind:quotes="quotes">
                             </ticker>
@@ -109,7 +111,7 @@
                 <div class="ticker__quote">
                     <div class="ticker__mid"">
                         <div class="ticker__mid-value" v-bind:class="{ 'is-positive-tick': isPositiveTick, 'is-negative-tick': isNegativeTick }">
-                            {{ quoteMid }}
+                            {{ mid }}
                         </div>
                     </div>
 
