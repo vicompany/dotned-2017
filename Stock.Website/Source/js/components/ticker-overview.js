@@ -12,9 +12,7 @@ const definition = {
 		return {
 			selectedSymbol: null,
 			symbols: ['Heineken', 'Yahoo', 'VI Company', 'Apple'],
-			tickers: [
-				{ symbol: 'Heineken' },
-			],
+			tickers: [],
 
 			quotes: { },
 		};

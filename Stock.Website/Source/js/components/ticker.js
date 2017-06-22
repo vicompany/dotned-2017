@@ -15,25 +15,27 @@ const definition = {
 	},
 
 	props: {
-		index: { default: 0 },
-		symbol: { default: null },
-		isExpanded: { default: false },
-		quotes: { default: { } },
+		index: {
+			default: () =>0,
+		},
+
+		symbol: {
+			default: () => null,
+		},
+
+		quote: {
+			default: () => [],
+		},
 	},
 
 	data() {
 		return {
-			quoteTimeoutId: null,
 			isPositiveTick: false,
 			isNegativeTick: false,
 		};
 	},
 
 	computed: {
-		quote() {
-			return this.quotes[this.symbol] || QUOTE_DEFAULT;
-		},
-
 		bid() {
 			if (!this.quote.bid) {
 				return null;
@@ -50,7 +52,7 @@ const definition = {
 			return parseFloat(this.quote.ask);
 		},
 
-		quoteMid() {
+		mid() {
 			if (!this.bid || !this.ask) {
 				return '-';
 			}
@@ -60,7 +62,7 @@ const definition = {
 	},
 
 	watch: {
-		quoteMid(newVal, oldVal) {
+		mid(newVal, oldVal) {
 			if (!oldVal) {
 				return;
 			}
@@ -83,10 +85,6 @@ const definition = {
 		resetTickStates() {
 			this.isPositiveTick = false;
 			this.isNegativeTick = false;
-		},
-
-		toggleExpanded() {
-			this.$emit('toggle-expanded', this.index);
 		},
 
 		remove() {
