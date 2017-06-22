@@ -20,6 +20,8 @@
             This shows Vue.js working with a Microsoft Orleans cluster. Please use <a href="/cached/demo">cached</a> demo for more fluent experience
         </p>
 
+        <h2>VueJS</h2>
+        <p>Take a look at: events, classes, states and model</p>
         <h3>Funds</h3>
 
         <div class="js-instance">
@@ -28,6 +30,8 @@
                     <div class="field">
                         <label for="symbol" class="label">Add a fund: </label>
 
+                        @* Event *@
+                        @* Model *@
                         <select name="symbol" id="symbol" class="field__input"
                             v-model="selectedSymbol"
                             v-on:change="onTickerSelected">
@@ -39,6 +43,7 @@
                         </select>
                     </div>
 
+                    @* State *@
                     <div class="notification" v-if="tickers.length === 0">No tickers added yet</div>
 
                     <div class="grid">
@@ -110,6 +115,7 @@
             <div class="cell">
                 <div class="ticker__quote">
                     <div class="ticker__mid"">
+                        @* Classes *@
                         <div class="ticker__mid-value" v-bind:class="{ 'is-positive-tick': isPositiveTick, 'is-negative-tick': isNegativeTick }">
                             {{ mid }}
                         </div>

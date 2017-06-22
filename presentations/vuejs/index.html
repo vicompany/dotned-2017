@@ -43,19 +43,12 @@
 
 				<section>
 					<h1>Intro</h1>
-					<section>
-						<h2>Who am I?</h2>
-						<div class="fragment">
-							<div>Pim van Die</div>
-							<div>Frontender</div>
-						</div>
+					<h2>Who am I?</h2>
+					<div class="fragment">
+						<div>Pim van Die</div>
+						<div>Frontender</div>
+					</div>
 
-					</section>
-
-					<section>
-						<h2>What is this about?</h2>
-						<img src="lib/img/vuejs-logo.png" alt="" class="fragment inline-image image-small" />
-					</section>
 				</section>
 
 				<section>
@@ -64,13 +57,17 @@
 						<h3>First: Disclaimer</h2>
 					</section>
 
-					<section><h3>Binding (data) to the DOM</h3></section>
+					<section>
+						<h3>Reason:</h3>Binding (data) to the DOM
+					</section>
 
 					<section>
 						<h2>Framework?</h2>
 						<span class="fragment" data-autoslide="500">React? Riot? Angular? Backbone?</span>
-						<span class="fragment" data-autoslide="500"> Aurelia? Polymer? Redux? Reflux? Reactify?</span>
-						<span class="fragment">Ember? Knockout? MoonJS?</span>
+						<span class="fragment" data-autoslide="500">Inferno? Ractive? SlimJS?</span>
+						<span class="fragment" data-autoslide="500">Aurelia? Polymer?</span>
+						<span class="fragment" data-autoslide="500">Redux? Reflux? Reactify?</span>
+						<span class="fragment" data-autoslide="500">Ember? Knockout? MoonJS?</span>
 						<div class="fragment">
 							<img src="lib/img/confused.gif" alt="">
 						</div>
@@ -85,10 +82,43 @@
 							<li>Fast <small><a href="https://vuejs.org/v2/guide/comparison.html" target="_blank">comparison</a></small></li>
 							<li class="fragment" data-autoslide="500">Easy to learn, install &amp; write</li>
 							<li class="fragment" data-autoslide="500">No <code>.jsx</code> <small>(although you can use `.vue`)</small></li>
-							<li class="fragment" data-autoslide="500">Detailed and understandable docs</li>
 							<li class="fragment" data-autoslide="500">Not one million thousand dependencies</li>
-							<li class="fragment" data-autoslide="500">One way data binding</li>
-							<li class="fragment">Easy compiling</li>
+							<li class="fragment" data-autoslide="500">Detailed and understandable docs</li>
+							<li class="fragment" data-autoslide="500">Large &amp; dev friendly community</li>
+							<li class="fragment" data-autoslide="500">VueJS Devtools</li>
+							<li class="fragment">One way data binding< between components</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<h2>VueJS Basics: structure</h2>
+					<p>One instance, one or multiple components</p>
+
+					<div class="fragment">
+						<img src="https://vuejs.org/images/components.png" alt="VueJS structure" />
+						<small>https://vuejs.org/images/components.png</small>
+					</div>
+				</section>
+
+				<section>
+					<h2>VueJS Basics: data &amp; props</h2>
+
+					<section>
+						<h3>Data</h3>
+						<ul>
+							<li>Defined inside the component</li>
+							<li>The component can manipulate its own data</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Props</h3>
+						<ul>
+							<li>Passed from a parent component to a child component</li>
+							<li>The child component <i>can't</i> manipulate the props</li>
+							<li>The parent component <i>can</i> manipulate the props </li>
+							<li>The props are updated inside the child component</li>
 						</ul>
 					</section>
 				</section>
@@ -99,11 +129,10 @@
 					<section>
 						<ul>
 							<li>An application is started with one Vue instance.</li>
-							<li class="fragment">
+							<li>
 								Often refered as the <code>vm</code>, for view model <br />
 								<small>(remember, depending on the view model, the DOM is manipulated).</small>
 							</li>
-							<li class="fragment">only one instance should be needed per page</li>
 						</ul>
 					</section>
 
@@ -139,26 +168,30 @@
 					<section>
 						<a href="https://vuejs.org/v2/guide/components.html" target="_blank">From the docs:</a>
 						<blockquote>
-							<p> a high level, components are custom elements that Vue’s compiler attaches behavior to</p>
+							<p>At high level, components are custom elements that Vue’s compiler attaches behavior to</p>
 						</blockquote>
 					</section>
 
 					<section>
 						<ul>
-							<li>Components live inside a <code>Vue</code> instance</li>
+							<li>Placed inside a <code>Vue</code> instance, or in a parent component</li>
 							<li>Create your own tag</li>
-							<li>
-								Components are reusable <br />
-								<small>(also inside the same instance)</small>
-							</li>
+							<li>Components are reusable</li>
 						</ul>
 
 						<div class="fragment">
 							<div>
 								<pre><code class="javascript" data-trim contenteditable>
 								Vue.component('my-custom-component', {
-								  mounted() {
-								    //
+								  data() {
+								    return {
+								       weather: 'Sunny',
+								    },
+								  },
+								  props: {
+								    name: {
+								      default: 'John Doe',
+								    },
 								  },
 								});
 								</code></pre>
@@ -166,7 +199,7 @@
 
 							<div>
 								<pre><code class="html" data-trim contenteditable>
-								<my-custom-component></my-custom-component>
+								<my-custom-component name="Pim"></my-custom-component>
 								</code></pre>
 							</div>
 
