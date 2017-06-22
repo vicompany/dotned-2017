@@ -1,22 +1,9 @@
-const states = {
-	pending: 'pending',
-	loading: 'loading',
-};
-
 const NA = '-';
 
 const QUOTE_DEFAULT = {
-	Bid: null,
-	Ask: null,
-	AverageDailyVolume: null,
-	Currency: NA,
-	DaysLow: NA,
-	DaysHigh: NA,
-	LastTradeDate: NA,
-	LastTradePriceOnly: NA,
-	Name: NA,
-	MarketCapitalization: NA,
-	EBITDA: NA,
+	bid: null,
+	ask: null,
+	fund: '',
 };
 
 const definition = {
@@ -31,13 +18,11 @@ const definition = {
 		index: { default: 0 },
 		symbol: { default: null },
 		isExpanded: { default: false },
-		passedQuotes: { default: { } },
-		refreshInterval: { default: 1000 }, // in MS
+		quotes: { default: { } },
 	},
 
 	data() {
 		return {
-			state: states.pending,
 			quoteTimeoutId: null,
 			isPositiveTick: false,
 			isNegativeTick: false,
@@ -46,7 +31,7 @@ const definition = {
 
 	computed: {
 		quote() {
-			return this.passedQuotes[this.symbol] || QUOTE_DEFAULT;
+			return this.quotes[this.symbol] || QUOTE_DEFAULT;
 		},
 
 		bid() {
@@ -71,10 +56,6 @@ const definition = {
 			}
 
 			return ((this.bid + this.ask) * 0.5).toPrecision(6);
-		},
-
-		toggleButtonText() {
-			return this.isExpanded ? 'collapse' : 'expand';
 		},
 	},
 

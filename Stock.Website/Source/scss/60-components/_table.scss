@@ -1,7 +1,6 @@
 .table {
 	width: 100%;
 
-	font-size: $font-size-xs;
 	border-collapse: collapse;
 
 	&:not(last-of-type) {
@@ -23,9 +22,12 @@
 
 .table__head {
 	text-align: left;
+	background-color: $color-gray;
 
 	.table--horizontal & {
 		width: 30%;
 		padding-left: $distance-s;
+
+		background-color: transparent;
 	}
 }

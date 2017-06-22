@@ -10,11 +10,10 @@ const definition = {
 
 	data() {
 		return {
-			refreshInterval: 2000, // MS
 			selectedSymbol: null,
 			symbols: ['Heineken', 'Yahoo', 'VI Company', 'Apple'],
 			tickers: [
-				{ symbol: 'Heineken', isExpanded: false },
+				{ symbol: 'Heineken' },
 			],
 
 			quotes: { },
@@ -49,12 +48,6 @@ const definition = {
 			this.selectedSymbol = null;
 		},
 
-		onSocketMessage(message) {
-			const data = JSON.parse(message.data);
-
-			this.$set(this.quotes, data.fund, data);
-		},
-
 		addTicker(symbol, isExpanded = false) {
 			this.tickers.push({
 				symbol,
@@ -68,6 +61,12 @@ const definition = {
 
 		toggleExpanded(index) {
 			this.tickers[index].isExpanded = !this.tickers[index].isExpanded;
+		},
+
+		onSocketMessage(message) {
+			const data = JSON.parse(message.data);
+
+			this.$set(this.quotes, data.fund, data);
 		},
 
 		subscribe() {

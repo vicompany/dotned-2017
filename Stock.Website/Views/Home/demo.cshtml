@@ -4,7 +4,7 @@
 @using Stock.Website.Models
 @model FundReportModel
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "VueJS & Orleans";
 }
 @if (!string.IsNullOrEmpty(ViewBag.Message))
 {
@@ -17,29 +17,20 @@
     <section class="section">
         <h1>Info</h1>
         <p>
-            This shows vue.js working with a Microsoft Orleans cluster. Please use <a href="/cached/demo">cached</a> demo for more fluent experience
+            This shows Vue.js working with a Microsoft Orleans cluster. Please use <a href="/cached/demo">cached</a> demo for more fluent experience
         </p>
-        @*    <h2>Orleans</h2>
 
-        It demonstrates;
-        <ul>
-            <li>Basic grain usage</li>
-            <li>Grain Observer </li>
-            <li>Caching with grains</li>
-        </ul>
-    </section>
-
-    <section class="section">
-        <h2>Vue.js</h2>
-    -- TODO --
-*@
         <h3>Funds</h3>
 
         <div class="js-instance">
             <ticker-overview inline-template>
                 <div>
                     <div class="field">
-                        <select name="symbol" class="field__input" v-model="selectedSymbol" v-on:change="onTickerSelected">
+                        <label for="symbol" class="label">Add a fund: </label>
+
+                        <select name="symbol" id="symbol" class="field__input"
+                            v-model="selectedSymbol"
+                            v-on:change="onTickerSelected">
                             <option
                                 v-for="symbol in symbols"
                                 v-bind:disabled="tickerExists(symbol)"
@@ -51,15 +42,15 @@
                     <div class="notification" v-if="tickers.length === 0">No tickers added yet</div>
 
                     <div class="grid">
-                        <div class="cell cell--small-1/2  cell--medium-1/4" v-for="(ticker, index) in tickers" v-bind:class="{ 'is-expanded': ticker.isExpanded }">
+                        <div class="cell cell--small-1/2  cell--medium-1/4"
+                            v-for="(ticker, index) in tickers"
+                        >
                             <ticker
                                 key="index"
                                 v-on:remove="remove"
-                                v-on:toggle-expanded="toggleExpanded"
                                 v-bind:index="index"
-                                v-bind:is-expanded="ticker.isExpanded"
                                 v-bind:symbol="ticker.symbol"
-                                v-bind:passed-quotes="quotes">
+                                v-bind:quotes="quotes">
                             </ticker>
                         </div>
                     </div>
@@ -72,26 +63,29 @@
     <section class="section">
         <h2>Fund history</h2>
 
-        Please init the funds by clicking <a asp-action="Init">Here</a>
-        <table class="table">
-            <thead>
-            <tr>
-                <td>Fund</td>
-                <td>Amount of bids</td>
-                <td>Average ask</td>
-                <td>Average bid</td>
-            </tr>
+        <p>
+            Please init the funds by clicking <a asp-action="Init">Here</a>
+        </p>
+
+        <table class="table table--zebra">
+            <thead class="table__head">
+                <tr class="table__row">
+                    <th class="table__cell">Fund</th>
+                    <th class="table__cell">Amount of bids</th>
+                    <th class="table__cell">Average ask</th>
+                    <th class="table__cell">Average bid</th>
+                </tr>
             </thead>
             <tbody>
             @if (Model.Report != null)
             {
                 foreach (var fund in Model.Report)
                 {
-                    <tr>
-                        <td>@fund.Name</td>
-                        <td>@fund.AmountOfPrices</td>
-                        <td>@fund.AverageBid.ToString("0.00000")</td>
-                        <td>@fund.AverageAsk.ToString("0.00000")</td>
+                    <tr class="table__row">
+                        <td class="table__cell">@fund.Name</td>
+                        <td class="table__cell">@fund.AmountOfPrices</td>
+                        <td class="table__cell">@fund.AverageBid.ToString("0.00000")</td>
+                        <td class="table__cell">@fund.AverageAsk.ToString("0.00000")</td>
                     </tr>
                 }
             }
@@ -106,14 +100,7 @@
 		<div class="ticker__header">
             <h2 class="ticker__title" v-text="symbol"></h2>
             <div class="ticker__actions">
-                <button class="button"
-                    v-on:click="remove">
-                    remove
-                </button>
-                <button class="button"
-                    v-on:click="toggleExpanded"
-                    v-text="toggleButtonText">
-                </button>
+                <button class="button" v-on:click="remove">remove</button>
             </div>
         </div>
 
@@ -137,62 +124,6 @@
                             <div class="ticker__quote-value" v-text="quote.ask"></div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="cell" v-if="isExpanded">
-                <div class="stats">
-                    <table class="table table--horizontal table--zebra">
-                        <tr class="table__row">
-                            <th class="table__head">Name</th>
-                            <td class="table__cell" v-text="quote.Name"></td>
-                        </tr>
-                         <tr class="table__row">
-                            <th class="table__head">Currency</th>
-                            <td class="table__cell" v-text="quote.Currency"></td>
-                        </tr>
-                         <tr class="table__row">
-                            <th class="table__head">Avg. Daily Volume</th>
-                            <td class="table__cell">{{ quote.AverageDailyVolume|formatNumber }}</td>
-                        </tr>
-                         <tr class="table__row">
-                            <th class="table__head">Market Cap.</th>
-                            <td class="table__cell">{{ quote.MarketCapitalization }}</td>
-                        </tr>
-                         <tr class="table__row">
-                            <th class="table__head">Earnings Before Interest</th>
-                            <td class="table__cell">{{ quote.EBITDA }}</td>
-                        </tr>
-                    </table>
-
-                    <hr />
-
-                    <table class="table table--horizontal table--zebra">
-                         <tr class="table__row">
-                            <th class="table__head">Open</th>
-                            <td class="table__cell" v-text="quote.Open"></td>
-                        </tr>
-                        <tr class="table__row">
-                            <th class="table__head">Previous close</th>
-                            <td class="table__cell" v-text="quote.PreviousClose"></td>
-                        </tr>
-                        <tr class="table__row">
-                            <th class="table__head">Days low</th>
-                            <td class="table__cell" v-text="quote.DaysLow"></td>
-                        </tr>
-                        <tr class="table__row">
-                            <th class="table__head">Days High</th>
-                            <td class="table__cell" v-text="quote.DaysHigh"></td>
-                        </tr>
-                        <tr class="table__row">
-                            <th class="table__head">Last traded</th>
-                            <td class="table__cell" v-text="quote.LastTradeDate"></td>
-                        </tr>
-                        <tr class="table__row">
-                            <th class="table__head">Last trade price</th>
-                            <td class="table__cell" v-text="quote.LastTradePriceOnly"></td>
-                        </tr>
-                    </table>
                 </div>
             </div>
         </div>
