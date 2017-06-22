@@ -12,28 +12,25 @@
 
 
 // Include theme-specific fonts
-@import url('https://fonts.googleapis.com/css?family=Josefin+Sans:400,700');
 @import url('https://fonts.googleapis.com/css?family=Questrial');
-@import url(../../lib/font/source-sans-pro/source-sans-pro.css);
-
 
 // custom vars
 $brandColor: #e00;
 
 // Override theme settings (see ../template/settings.scss)
-$backgroundColor: #fff;
+$backgroundColor: #1e283c;
 
-$mainColor: #222;
-$headingColor: #222;
+$mainColor: #fff;
+$headingColor: #fff;
 
 $mainFontSize: 35px;
-$mainFont: 'Source Sans Pro', Helvetica, sans-serif;
+$mainFont: 'Questrial', Helvetica, sans-serif;
 $headingFont: 'Questrial', sans-serif;
 $headingTextShadow: none;
 $headingLetterSpacing: normal;
 $headingTextTransform: uppercase;
 $headingFontWeight: 600;
-$linkColor: $brandColor;
+$linkColor: $mainColor;
 $linkColorHover: lighten( $linkColor, 15% );
 $selectionBackgroundColor: lighten( $linkColor, 25% );
 
@@ -56,6 +53,10 @@ section.has-dark-background {
 // Custom theme and theme override
 
 .reveal {
+	section img {
+		background-color: transparent;
+	}
+
 	h1,
 	h2,
 	h3,
@@ -123,11 +124,11 @@ section.has-dark-background {
 	position: fixed;
 	z-index: 999;
 
-	bottom: 10px;
-	left: 10px;
+	bottom: 0px;
+	left: 20px;
 
-	width: 160px;
-	height: 20px;
+	width: 130px;
+	height: 70px;
 
 	background-image: url(../../lib/img/logo.svg);
 	background-size: contain;
