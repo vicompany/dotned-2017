@@ -264,3 +264,4 @@ __pycache__/
 *.log
 localhost-StartupError*.txt
 wwwroot/dist/*
+presentations/lib/font/
