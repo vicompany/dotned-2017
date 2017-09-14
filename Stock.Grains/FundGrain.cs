@@ -35,7 +35,7 @@ namespace Stock.Grains
 
 
                     return Task.CompletedTask;
-                }, this, TimeSpan.FromSeconds(0), TimeSpan.FromMilliseconds(500));
+                }, this, TimeSpan.FromSeconds(0), TimeSpan.FromMilliseconds(1));
 
             var reporter = this.GrainFactory.GetGrain<IFundReporter>(0);
             await reporter.TrackFund(this.GetPrimaryKeyString());
